@@ -15,7 +15,7 @@
     <description>Spring Security with JWT</description>
     <properties>
         <java.version>17</java.version>
-        <spotbugs.plugin.version>4.8.6.2</spotbugs.plugin.version>
+        <spotbugs.plugin.version>4.8.6.3</spotbugs.plugin.version>
         <aws-java-sdk.version>2.27.19</aws-java-sdk.version>
     </properties>
     <dependencies>
