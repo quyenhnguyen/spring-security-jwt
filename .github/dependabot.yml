@@ -4,5 +4,10 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "16:58"
+      time: "17:17"
       timezone: "Etc/GMT+7"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+    target-branch: "dependabot-test"
