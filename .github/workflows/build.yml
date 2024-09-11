@@ -27,6 +27,10 @@ jobs:
 
       - name: "Switch to branch"
         run: |
+          git config --global push.default current
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          
           timestamp=$(date +%s)
           branch_name="bot-update-version-${timestamp}"
           git checkout -b ${branch_name}
@@ -41,10 +45,11 @@ jobs:
       - name: "Git Commit And Push"
         shell: bash
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git commit -am "Auto increment version"
-          git push
+          git status
+          git add .
+          git commit -m "Auto increment version"
+          git push -f -u origin HEAD
+          # git push origin ${branch_name}
           echo "Pushed files"
 
       - name: "Push changes"
