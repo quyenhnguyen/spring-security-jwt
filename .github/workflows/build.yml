@@ -1,0 +1,97 @@
+name: "Build"
+on:
+  push:
+    branches:
+      - "**"
+      - "!master"
+      -  "!bot-update-version-*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    steps:
+      - name: "Admin Checkout"
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      - name: "Git Rebase"
+        shell: bash
+        run: |
+          echo "Rebasing master..."
+          git pull
+
+      - name: "Switch to branch"
+        run: |
+          git config --global push.default current
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          
+          timestamp=$(date +%s)
+          branch_name="bot-update-version-${timestamp}"
+          git checkout -b ${branch_name}
+        shell: bash
+
+      - name: Append to README.md
+        run: |
+          timestamp=$(date +%s)
+          echo "Updated at: ${timestamp}" >> README.md
+        shell: bash
+
+      - name: "Git Commit And Push"
+        shell: bash
+        run: |
+          echo "branch_name: ${branch_name}"
+          git status
+          git add .
+          git commit -m "Auto increment version"
+          # git push -f -u origin HEAD
+          git push origin ${branch_name}
+          echo "Pushed files"
+
+#      - name: "Push changes"
+#        shell: bash
+#        run: |
+#          git push origin ${branch_name}
+
+      - name: "Create Pull Request"
+        shell: bash
+        run: |
+          echo "branch_name: ${branch_name}"
+          gh pr list --head "$branch_name"
+          # PR_URL=$(gh pr list --head "${branch_name}" --json number -q '.[0].number')
+          PR_URL=$(gh pr create \
+           --head "${branch_name}" \
+           --title "Automated assets update" \
+           --body "Full log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}")
+          echo "PR_URL: ${PR_URL}"
+          # gh pr create --title "Auto increment version" --body "Auto increment version" --base master --head ${branch_name}
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: "First Approval"
+        shell: bash
+        run: |
+          # PR_URL=$(gh pr list --head "${branch_name}" --json number -q '.[0].url')
+          echo "Approving PR: ${PR_URL}"
+          # pr_url=$(gh pr list --head "${branch_name}" --json url --jq '.[0].url')
+          echo "PR_URL: ${PR_URL}"
+
+          gh pr review --approve "$PR_URL"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Merge PR"
+        shell: bash
+        run: |
+          # pr_url=$(gh pr list --head ${branch_name} --json url --jq '.[0].url')
+          # echo "pr_url=${pr_url}"
+          
+          # pr_number=$(gh pr list --state open --limit 1 --json number --jq '.[0].number')
+          gh pr merge --auto --squash "$PR_URL"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
