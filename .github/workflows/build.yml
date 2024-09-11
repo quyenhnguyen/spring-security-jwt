@@ -58,32 +58,39 @@ jobs:
           git push origin ${branch_name}
 
       - name: "Create Pull Request"
-        uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${branch_name}
-          base: master
-          title: "Update README with timestamp"
-          body: "This PR updates the README with the current timestamp."
+        shell: bash
+        run: |
+          gh pr list --state open --head $branch_name --json number
+          # PR_URL=$(gh pr list --state open --head $branch_name --json number -q '.[0].number')
+          if [ -z $PR_URL ]; then
+           gh pr create \
+           --head $branch_name \
+           --title "Automated assets update" \
+           --body "Full log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          else
+           echo "Pull request already exists, won't create a new one."
+          fi
+          # gh pr create --title "Auto increment version" --body "Auto increment version" --base master --head ${branch_name}
 
       - name: "First Approval"
         shell: bash
         run: |
+          PR_URL=$(gh pr list --head $branch_name --json number -q '.[0].number')
           echo "Approving PR: ${PR_URL}"
-          pr_url=$(gh pr list --head ${branch_name} --json url --jq '.[0].url')
-          echo "pr_url: ${pr_url}"
+          # pr_url=$(gh pr list --head ${branch_name} --json url --jq '.[0].url')
+          echo "PR_URL: ${PR_URL}"
 
-          gh pr review --approve "$pr_url"
+          gh pr review --approve "$PR_URL"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Merge PR"
         shell: bash
         run: |
-          pr_url=$(gh pr list --head ${branch_name} --json url --jq '.[0].url')
-          echo "pr_url=${pr_url}"
+          # pr_url=$(gh pr list --head ${branch_name} --json url --jq '.[0].url')
+          # echo "pr_url=${pr_url}"
           
           # pr_number=$(gh pr list --state open --limit 1 --json number --jq '.[0].number')
-          gh pr merge --auto --squash "$pr_url"
+          gh pr merge --auto --squash "$PR_URL"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
