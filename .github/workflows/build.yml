@@ -79,16 +79,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-#      - name: "First Approval"
-#        shell: bash
-#        run: |
-#          PR_URL=${{ steps.create_pr.outputs.PR_URL }}
-#          echo "Approving PR: ${PR_URL}"
-#          # pr_url=$(gh pr list --head "${branch_name}" --json url --jq '.[0].url')
-#
-#          gh pr review --approve "$PR_URL"
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "First Approval"
+        shell: bash
+        run: |
+          PR_URL=${{ steps.create_pr.outputs.PR_URL }}
+          echo "Approving PR: ${PR_URL}"
+          # pr_url=$(gh pr list --head "${branch_name}" --json url --jq '.[0].url')
+
+          gh pr review --approve "$PR_URL"
+        env:
+          GITHUB_TOKEN: ${{ secrets.OTHER_GITHUB_TOKEN }}
 
       - name: "Merge PR"
         shell: bash
