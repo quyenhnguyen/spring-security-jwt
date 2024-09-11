@@ -60,8 +60,8 @@ jobs:
       - name: "Create Pull Request"
         shell: bash
         run: |
-          gh pr list --state open --head $branch_name --json number
-          # PR_URL=$(gh pr list --state open --head $branch_name --json number -q '.[0].number')
+          gh pr list --head ${branch_name}
+          # PR_URL=$(gh pr list --state open --head $branch_name --json 'number' -q '.[0].number')
           if [ -z $PR_URL ]; then
            gh pr create \
            --head $branch_name \
