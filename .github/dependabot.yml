@@ -6,3 +6,7 @@ updates:
       interval: "daily"
       time: "16:58"
       timezone: "Etc/GMT+7"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
