@@ -1,0 +1,84 @@
+name: "Build"
+on:
+  push:
+    branches:
+      - "**"
+      - "!master"
+      -  "!bot-update-version-*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    steps:
+      - name: "Admin Checkout"
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      - name: "Git Rebase"
+        shell: bash
+        run: |
+          echo "Rebasing master..."
+          git pull
+
+      - name: "Switch to branch"
+        run: |
+          timestamp=$(date +%s)
+          branch_name="bot-update-version-${timestamp}"
+          git checkout -b ${branch_name}
+        shell: bash
+
+      - name: Append to README.md
+        run: |
+          timestamp=$(date +%s)
+          echo "Updated at: ${timestamp}" >> README.md
+        shell: bash
+
+      - name: "Git Commit And Push"
+        shell: bash
+        run: |
+          git commit -am "Auto increment version"
+          git push
+          echo "Pushed files"
+
+      - name: "Push changes"
+        shell: bash
+        run: |
+          git push origin ${branch_name}
+
+      - name: "Create Pull Request"
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${branch_name}
+          base: master
+          title: "Update README with timestamp"
+          body: "This PR updates the README with the current timestamp."
+
+      - name: "First Approval"
+        shell: bash
+        run: |
+          echo "Approving PR: ${PR_URL}"
+          pr_url=$(gh pr list --head ${branch_name} --json url --jq '.[0].url')
+          echo "pr_url: ${pr_url}"
+
+          git config --global user.email "${{ inputs.user-email }}"
+          git config --global user.name "${{ inputs.user-name }}"
+          gh pr review --approve "$pr_url"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Merge PR"
+        shell: bash
+        run: |
+          pr_url=$(gh pr list --head ${branch_name} --json url --jq '.[0].url')
+          echo "pr_url=${pr_url}"
+          
+          # pr_number=$(gh pr list --state open --limit 1 --json number --jq '.[0].number')
+          gh pr merge --auto --squash "$pr_url"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
