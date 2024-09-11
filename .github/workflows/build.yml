@@ -97,7 +97,7 @@ jobs:
           # echo "pr_url=${pr_url}"
           
           # pr_number=$(gh pr list --state open --limit 1 --json number --jq '.[0].number')
-          gh pr merge --merge --auto "1"
-          # gh pr merge --merge --auto "1" --squash "$PR_URL"
+          gh pr merge --squash "$PR_URL"
+          # gh pr merge --merge --auto "1"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
