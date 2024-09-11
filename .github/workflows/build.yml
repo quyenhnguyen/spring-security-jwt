@@ -60,24 +60,25 @@ jobs:
       - name: "Create Pull Request"
         shell: bash
         run: |
-          gh pr list --state open --head $branch_name --json number
-          # PR_URL=$(gh pr list --state open --head $branch_name --json number -q '.[0].number')
+          PR_URL=$(gh pr list --head "${branch_name}" --json 'number' -q '.[0].number')
           if [ -z $PR_URL ]; then
            gh pr create \
-           --head $branch_name \
+           --head "${branch_name}" \
            --title "Automated assets update" \
            --body "Full log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           else
            echo "Pull request already exists, won't create a new one."
           fi
           # gh pr create --title "Auto increment version" --body "Auto increment version" --base master --head ${branch_name}
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: "First Approval"
         shell: bash
         run: |
-          PR_URL=$(gh pr list --head $branch_name --json number -q '.[0].number')
+          PR_URL=$(gh pr list --head "${branch_name}" --json number -q '.[0].url')
           echo "Approving PR: ${PR_URL}"
-          # pr_url=$(gh pr list --head ${branch_name} --json url --jq '.[0].url')
+          # pr_url=$(gh pr list --head "${branch_name}" --json url --jq '.[0].url')
           echo "PR_URL: ${PR_URL}"
 
           gh pr review --approve "$PR_URL"
