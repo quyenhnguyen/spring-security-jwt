@@ -1,12 +1,12 @@
-version: 2
-updates:
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "16:58"
-      timezone: "Etc/GMT+7"
-    groups:
-      dependencies:
-        patterns:
-          - "*"
+#version: 2
+#updates:
+#  - package-ecosystem: "maven"
+#    directory: "/"
+#    schedule:
+#      interval: "daily"
+#      time: "16:58"
+#      timezone: "Etc/GMT+7"
+#    groups:
+#      dependencies:
+#        patterns:
+#          - "*"
