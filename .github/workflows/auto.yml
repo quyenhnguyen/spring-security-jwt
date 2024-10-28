@@ -24,16 +24,16 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Commit changes
-        run: |
-          git add README.md
-          git commit -m "Add Hello ${{ github.workflow }} to README.md"
-
-      - name: Push to protected branch
-        uses: CasperWA/push-protected@v2
-        with:
-          token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
-          branch: master
+#      - name: Commit changes
+#        run: |
+#          git add README.md
+#          git commit -m "Add Hello ${{ github.workflow }} to README.md"
+#
+#      - name: Push to protected branch
+#        uses: CasperWA/push-protected@v2
+#        with:
+#          token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+#          branch: master
 
 #      - name: Push changes
 #        env:
