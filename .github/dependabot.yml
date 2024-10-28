@@ -11,10 +11,8 @@ updates:
       - dependency-name: "*"
         update-types:
           - version-update:semver-major
-      - dependency-name: "org.opensearch:opensearch"
-        versions: [">=2.3.0"] # Prevent updates to version 2.3.0 or higher due to potential breaking changes. See: https://github.com/opensearch-project/OpenSearch/blob/main/release-notes/opensearch.release-notes-2.3.0.md
-      - dependency-name: "org.opensearch.client:opensearch-rest-high-level-client"
-        versions: [">=2.3.0"] # Prevent updates to version 2.3.0 or higher due to potential breaking changes. See: https://github.com/opensearch-project/OpenSearch/blob/main/release-notes/opensearch.release-notes-2.3.0.md
+      - dependency-name: "org.opensearch*"
+        versions: [">2.13.0"] # Prevent updates to the latest version to maintain compatibility with the OpenSearch cluster
     groups:
       dependencies:
         patterns:
@@ -30,10 +28,8 @@ updates:
         update-types:
           - version-update:semver-major
           - version-update:semver-minor
-      - dependency-name: "org.opensearch:opensearch"
-        versions: [">=2.3.0"] # Prevent updates to version 2.3.0 or higher due to potential breaking changes. See: https://github.com/opensearch-project/OpenSearch/blob/main/release-notes/opensearch.release-notes-2.3.0.md
-      - dependency-name: "org.opensearch.client:opensearch-rest-high-level-client"
-        versions: [">=2.3.0"] # Prevent updates to version 2.3.0 or higher due to potential breaking changes. See: https://github.com/opensearch-project/OpenSearch/blob/main/release-notes/opensearch.release-notes-2.3.0.md
+      - dependency-name: "org.opensearch*"
+        versions: [">2.13.0"] # Prevent updates to the latest version to maintain compatibility with the OpenSearch cluster
     groups:
       dependencies:
         patterns:
