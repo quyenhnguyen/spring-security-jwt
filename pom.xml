@@ -20,6 +20,31 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>org.opensearch</groupId>
+            <artifactId>opensearch</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opensearch.client</groupId>
+            <artifactId>opensearch-rest-high-level-client</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opensearch.plugin</groupId>
+            <artifactId>geo</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opensearch.plugin</groupId>
+            <artifactId>geospatial</artifactId>
+            <version>2.13.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opensearch.plugin.geospatial</groupId>
+            <artifactId>h3</artifactId>
+            <version>2.13.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>bom</artifactId>
             <version>${aws-java-sdk.version}</version>
