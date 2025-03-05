@@ -47,8 +47,7 @@ jobs:
           git add docs/date.md
           # Use "[skip ci]" to avoid recursive workflow triggers
           git commit -m "Add date.md file [skip ci]" || echo "No changes to commit"
-          git push origin mkdocs
-          
+          git push
 
       - name: Deploy MkDocs
         run: |
