@@ -39,6 +39,11 @@ jobs:
 #      - name: Build the site
 #        run: mkdocs build  # Generates the "site/" directory
 
+      - name: Deploy MkDocs
+        run: |
+          git status
+          mkdocs gh-deploy
+
       - name: Commit and Push Changes
         id: commit-push-release-file
         run: |
@@ -55,11 +60,6 @@ jobs:
 #        run: |
 #          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/quyenhnguyen/spring-security-jwt.git
 #          git push origin master
-
-      - name: Deploy MkDocs
-        run: |
-          git status
-          mkdocs gh-deploy
 
 #      - name: Upload artifact
 #        uses: actions/upload-pages-artifact@v3
