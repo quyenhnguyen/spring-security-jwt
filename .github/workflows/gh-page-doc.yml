@@ -59,7 +59,7 @@ jobs:
       - name: Deploy MkDocs
         run: |
           git status
-          mkdocs gh-deploy --force
+          mkdocs gh-deploy
 
 #      - name: Upload artifact
 #        uses: actions/upload-pages-artifact@v3
