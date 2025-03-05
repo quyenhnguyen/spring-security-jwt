@@ -43,7 +43,7 @@ jobs:
         id: commit-push-release-file
         run: |
           git config user.name "quyenhnguyen"
-          git config user.email "quyenhnguyen@gmail.com"
+          git config user.email "hoangquyen7901@gmail.com"
           git add docs/date.md
           # Use "[skip ci]" to avoid recursive workflow triggers
           git commit -m "Add date.md file [skip ci]" || echo "No changes to commit"
