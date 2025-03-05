@@ -2,6 +2,7 @@ site_name: My Docs
 
 nav:
   - Home: index.md
+  - Details: data.md
 theme:
   name: "material"
   icon:
