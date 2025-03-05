@@ -42,6 +42,7 @@ jobs:
       - name: Deploy MkDocs
         run: |
           git status
+          git fetch origin gh-pages
           mkdocs gh-deploy
 
       - name: Commit and Push Changes
