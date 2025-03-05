@@ -30,13 +30,37 @@ jobs:
         run: |
           pip install mkdocs mkdocs-material
 
-      - name: Build the site
-        run: mkdocs build  # Generates the "site/" directory
+      - name: Create docs directory and add date.md
+        run: |
+          mkdir -p docs
+          # Write current date into the file
+          echo "Current Date: $(date)" > docs/date.md
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site  # Uploads the built MkDocs site
+#      - name: Build the site
+#        run: mkdocs build  # Generates the "site/" directory
 
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+      - name: Commit and Push Changes
+        id: commit-push-release-file
+        if: env.MKDOCS_UPDATE == 'true'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add docs/date.md
+          # Use "[skip ci]" to avoid recursive workflow triggers
+          git commit -m "Add date.md file [skip ci]" || echo "No changes to commit"
+          git push origin mkdocs
+          
+
+      - name: Deploy MkDocs
+        if: env.MKDOCS_UPDATE == 'true'
+        run: |
+          git status
+          mkdocs gh-deploy
+
+#      - name: Upload artifact
+#        uses: actions/upload-pages-artifact@v3
+#        with:
+#          path: site  # Uploads the built MkDocs site
+#
+#      - name: Deploy to GitHub Pages
+#        uses: actions/deploy-pages@v4
