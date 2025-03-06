@@ -25,11 +25,9 @@ updates:
       timezone: "UTC"
     ignore:
       - dependency-name: "*"
-        update-types:
-          - version-update:semver-major
-          - version-update:semver-minor
+        update-types: ["version-update:semver-major"]
       - dependency-name: "org.opensearch*"
-        versions: [">2.13.0"] # Prevent updates to the latest version to maintain compatibility with the OpenSearch cluster
+        update-types: ["version-update:semver-minor"]
     groups:
       dependencies:
         patterns:
