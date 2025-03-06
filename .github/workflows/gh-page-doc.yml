@@ -39,21 +39,21 @@ jobs:
 #      - name: Build the site
 #        run: mkdocs build  # Generates the "site/" directory
 
-      - name: Deploy MkDocs
-        run: |
-          git status
-          git fetch origin gh-pages
-          mkdocs gh-deploy
+#      - name: Deploy MkDocs
+#        run: |
+#          git status
+#          git fetch origin gh-pages
+#          mkdocs gh-deploy
 
-      - name: Commit and Push Changes
-        id: commit-push-release-file
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add docs/date.md
-          # Use "[skip ci]" to avoid recursive workflow triggers
-          git commit -m "Add date.md file [skip ci]" || echo "No changes to commit"
-          git push
+#      - name: Commit and Push Changes
+#        id: commit-push-release-file
+#        run: |
+#          git config user.name "github-actions"
+#          git config user.email "github-actions@github.com"
+#          git add docs/date.md
+#          # Use "[skip ci]" to avoid recursive workflow triggers
+#          git commit -m "Add date.md file [skip ci]" || echo "No changes to commit"
+#          git push
 
 #      - name: Push Changes Using Personal Token
 #        env:
