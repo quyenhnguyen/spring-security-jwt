@@ -3,29 +3,12 @@ updates:
   - package-ecosystem: maven
     directory: /
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "01:00"
-      timezone: "UTC"
-    ignore:
-      - dependency-name: "*"
-        update-types:
-          - version-update:semver-major
-      - dependency-name: "org.opensearch*"
-        versions: [">2.13.0"] # Prevent updates to the latest version to maintain compatibility with the OpenSearch cluster
-    groups:
-      dependencies:
-        patterns:
-          - "*"
-  - package-ecosystem: maven
-    directory: /
-    schedule:
       interval: "daily"
       time: "01:00"
       timezone: "UTC"
     ignore:
-#      - dependency-name: "*"
-#        update-types: ["version-update:semver-major"]
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
       - dependency-name: "org.opensearch*"
         update-types: ["version-update:semver-minor"]
     groups:
