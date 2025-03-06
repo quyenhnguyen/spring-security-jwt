@@ -24,8 +24,8 @@ updates:
       time: "01:00"
       timezone: "UTC"
     ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
+#      - dependency-name: "*"
+#        update-types: ["version-update:semver-major"]
       - dependency-name: "org.opensearch*"
         update-types: ["version-update:semver-minor"]
     groups:
