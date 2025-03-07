@@ -16,4 +16,3 @@ updates:
         patterns:
           - "*"
     target-branch: master
-
