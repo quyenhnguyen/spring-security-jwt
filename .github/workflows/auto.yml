@@ -1,8 +1,8 @@
 name: "Auto"
 on:
-  push:
-    branches:
-      - "master"
+#  push:
+#    branches:
+#      - "master"
   pull_request_target: # every time a PR is closed on master or main
     types:
       - "closed"

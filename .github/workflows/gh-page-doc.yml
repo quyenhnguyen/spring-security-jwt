@@ -1,9 +1,6 @@
 name: Deploy MkDocs to GitHub Pages
 
 on:
-  push:
-    branches:
-      - master  # Deploy only when changes are merged to main
   workflow_call:
 
 permissions:
